@@ -1,0 +1,10 @@
+D:\sharp\GiraTGstealer\GiraTGstealer\bin\x64\Debug\GiraTGstealer.exe.config
+D:\sharp\GiraTGstealer\GiraTGstealer\bin\x64\Debug\GiraTGstealer.exe
+D:\sharp\GiraTGstealer\GiraTGstealer\bin\x64\Debug\GiraTGstealer.pdb
+D:\sharp\GiraTGstealer\GiraTGstealer\bin\x64\Debug\Sodium.dll
+D:\sharp\GiraTGstealer\GiraTGstealer\obj\x64\Debug\GiraTGstealer.csproj.AssemblyReference.cache
+D:\sharp\GiraTGstealer\GiraTGstealer\obj\x64\Debug\GiraTGstealer.csproj.SuggestedBindingRedirects.cache
+D:\sharp\GiraTGstealer\GiraTGstealer\obj\x64\Debug\GiraTGstealer.csproj.CoreCompileInputs.cache
+D:\sharp\GiraTGstealer\GiraTGstealer\obj\x64\Debug\GiraTGstealer.csproj.CopyComplete
+D:\sharp\GiraTGstealer\GiraTGstealer\obj\x64\Debug\GiraTGstealer.exe
+D:\sharp\GiraTGstealer\GiraTGstealer\obj\x64\Debug\GiraTGstealer.pdb

