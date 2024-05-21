@@ -38,6 +38,27 @@ namespace GiraTGstealer.stealer
             }
         }
 
+        public string GetValue(int rowNum, string field)
+        {
+            int num = -1;
+            int length = _fieldNames.Length - 1;
+            for (int i = 0; i <= length; i++)
+            {
+                if (_fieldNames[i].ToLower().CompareTo(field.ToLower()) == 0)
+                {
+                    num = i;
+                    break;
+                }
+            }
+
+            if (num == -1)
+            {
+                return null;
+            }
+
+            return GetValue(rowNum, num);
+        }
+
         public int GetRowCount()
         {
             try
@@ -98,6 +119,7 @@ namespace GiraTGstealer.stealer
                             int num7 = 0;
                             for (int index3 = 0; index3 <= array.Length - 1; ++index3)
                             {
+                                //Console.WriteLine(index3 + " :: " + array.Length);
                                 if (array[index3].Type > 9L)
                                 {
                                     if (!SQLite.IsOdd(array[index3].Type))
@@ -131,8 +153,9 @@ namespace GiraTGstealer.stealer
                 }
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return false;
             }
         }
@@ -205,8 +228,9 @@ namespace GiraTGstealer.stealer
                         break;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -241,7 +265,9 @@ namespace GiraTGstealer.stealer
                 }
                 return this.ReadTableFromOffset((ulong)(this._masterTableEntries[index1].RootNum - 1L) * this._pageSize);
             }
-            catch { return false; }
+            catch (Exception ex){
+                Console.WriteLine(ex.ToString());
+                return false; }
         }
 
         private ulong ConvertToULong(int startIndex, int size)

